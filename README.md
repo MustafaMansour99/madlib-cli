@@ -1,4 +1,4 @@
-# LAB - Class02
+# LAB - Class03
 
 ## Project : madlib-cli
 ## Author : Mustafa Mansour
