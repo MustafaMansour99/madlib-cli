@@ -12,24 +12,14 @@ def read_template(path):
         return file.read().strip()
 
 def parse_template(text):
-    actual_stripped=''
-    actual_parts=[]
-    x=text.split(' ')
-    # regex for check the word inside pracits
-    reg=r"^{\w+}|\.$"
-    for i in x:
-        if re.match(reg,i)==None :
-            actual_stripped+=f"{i} "
-        else :
-            if i==x[-1]:
-                actual_stripped+='{}.'
-                actual_parts+=[i[1:-2]] 
-            else:
-                actual_parts+=[i[1:-1]]
-                actual_stripped+='{} '
-    # convarert actual_parts from array to tuple
-    actual_parts=tuple(actual_parts)
-    return (actual_stripped,actual_parts) 
+    regex = re.compile(r"{(.+?)}")
+
+    parts = regex.findall(text)
+
+    stripped_template = regex.sub('{}', text)
+
+    return stripped_template, tuple(parts)
+
 
 def merge(text,tep):
     return text.format(*tep)
@@ -52,4 +42,4 @@ def start_game(file_toRead_game,file_toWrite_game):
     print(f"this is the story you wrote it \n{result}")
     create_file(result,file_toWrite_game)
 if __name__=="__main__":
-    start_game("assets/dark_and_stormy_night_template.txt","assets/madlib_game_file_output.txt")
+    start_game("assets/madlib_game_read.txt","assets/madlib_game_file_output.txt")
